@@ -11,7 +11,9 @@ module CloudDns
     
     # Get a single domain details
     def domain(id)
-      CloudDns::Domain.new(get("/domains/#{id}"))
+      d = CloudDns::Domain.new(get("/domains/#{id}"))
+      d.client = self
+      d
     end
   end
 end

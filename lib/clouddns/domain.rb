@@ -18,7 +18,7 @@ module CloudDns
     def records
       record_list.records
     end
-      
+        
     # Assign a client connection to the record
     def client= (c)
       raise ArgumentError, "CloudDns::Client required!" unless c.kind_of?(CloudDns::Client)
