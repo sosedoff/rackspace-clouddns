@@ -7,9 +7,13 @@ module CloudDns
   end
   
   class Domain < Base
-    attr_reader :id, :account_id
-    attr_accessor :name, :ttl
-    attr_accessor :nameservers
+    attr_reader   :id          # Domain primary ID
+    attr_reader   :client_id   # Domain client ID
+    attr_accessor :name        # Domain primary name
+    attr_accessor :ttl         # Domain TTL
+    attr_accessor :nameservers # Collection of CloudDns::Nameserver objects
+    attr_reader   :created_at  # Domain creation timestamp
+    attr_reader   :updated_at  # Domain last update timestamp
     
     # Initialize a new CloudDns::Domain instance
     #
@@ -27,8 +31,8 @@ module CloudDns
       @id         = h.id
       @account_id = h.account_id
       @name       = h.name
-      @created_at = h.created
-      @updated_at = h.updated
+      @created_at = Time.parse(h.created)
+      @updated_at = Time.parse(h.updated)
       @ttl        = h.ttl
       
       # Load nameservers records if present

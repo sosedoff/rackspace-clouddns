@@ -2,7 +2,8 @@ module CloudDns
   module Domains
     # Get a list of domain on account
     #
-    # options - Options hash
+    # options - Options hash. Available options are:
+    # options[:name] - Filter by domain name
     # options[:limit] - Specify a limit of domains to fetch (default: 10)
     # options[:offset] - Specify an offset to start from (default: 0)
     #
