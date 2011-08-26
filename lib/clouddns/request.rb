@@ -27,7 +27,7 @@ module CloudDns
     #
     def connection(url)
       connection = Faraday.new(url) do |c|
-        c.use(Faraday::Response::Logger)
+        c.use(Faraday::Response::Logger) if CloudDns.log_requests
         c.use(Faraday::Request::UrlEncoded)
         c.use(Faraday::Response::RaiseCloudDnsError)
         c.use(Faraday::Response::ParseJson)

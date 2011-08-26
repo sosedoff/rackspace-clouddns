@@ -8,6 +8,22 @@ require 'clouddns/record'
 require 'clouddns/client'
 
 module CloudDns
+  @@logger = false
+  
+  # Set logger mode
+  #
+  # value - Enable/disable logger
+  #
+  def self.log_requests= (value)
+    @@logger = value == true
+  end
+  
+  # Return current logger state
+  #
+  def self.log_requests
+    @@logger
+  end
+  
   class << self
     # Shorthand to CloudDns::Client.new
     #
