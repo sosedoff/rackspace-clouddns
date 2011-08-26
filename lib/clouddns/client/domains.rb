@@ -22,7 +22,12 @@ module CloudDns
     # @return [CloudDns::Domain]
     #
     def domain(id)
-      CloudDns::Domain.new(self, get("/domains/#{id}"))
+      options = {
+        'showRecords' => true,
+        'showSubdomains' => true
+      }
+      
+      CloudDns::Domain.new(self, get("/domains/#{id}", options))
     end
   end
 end
