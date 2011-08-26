@@ -28,8 +28,10 @@ def stub_get(path, params, fixture_name)
     'X-Auth-Token' => 'AUTH_TOKEN'
   }
   
-  stub_request(:get, api_url(path)).
-    with(:headers => headers).
+  stub_options = {:headers => headers}
+  stub_options.merge!(:query => params) unless (params || {}).empty?
+  
+  stub_request(:get, api_url(path)).with(stub_options).
     to_return(
       :status => 200,
       :body => fixture(fixture_name),
