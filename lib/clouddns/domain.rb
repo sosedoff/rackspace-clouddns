@@ -9,11 +9,13 @@ module CloudDns
   class Domain < Base
     attr_reader   :id          # Domain primary ID
     attr_reader   :client_id   # Domain client ID
+    attr_reader   :created_at  # Domain creation timestamp
+    attr_reader   :updated_at  # Domain last update timestamp
+    
     attr_accessor :name        # Domain primary name
     attr_accessor :ttl         # Domain TTL
     attr_accessor :nameservers # Collection of CloudDns::Nameserver objects
-    attr_reader   :created_at  # Domain creation timestamp
-    attr_reader   :updated_at  # Domain last update timestamp
+    attr_accessor :records     # Collection of CloudDns::Record objects
     
     # Initialize a new CloudDns::Domain instance
     #
