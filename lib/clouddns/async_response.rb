@@ -8,14 +8,18 @@ module CloudDns
     # client - CloudDns::Client instance
     # data   - Response data from regular request
     #
-    def initialize(client, data={})
+    def initialize(client, data={})  
+      @client       = client
+      @job_id       = data['jobId'].to_s
+      @callback_url = data['callbackUrl'].to_s
+      
       unless client.kind_of?(CloudDns::Client)
         raise ArgumentError, "CloudDns::Client required!"
       end
       
-      @client       = client
-      @job_id       = data['jobId']
-      @callback_url = data['callbackUrl']
+      if @job_id.empty?
+        raise ArgumentError, "Job ID required!"
+      end
     end
     
     # Check the job status

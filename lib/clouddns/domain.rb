@@ -57,13 +57,13 @@ module CloudDns
     # Save domain information
     #
     def save
-      # TODO
+      new? ? @client.create_domain(self) : @client.update_domain(self)
     end
     
     # Delete domain
     #
     def delete
-      @client.delete_domain(self.id)
+      new? ? false : @client.delete_domain(self)
     end
   end
 end
