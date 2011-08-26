@@ -53,10 +53,19 @@ module CloudDns
         'X-Auth-Key'   => api_key,
         'X-Auth-Token' => auth_token
       }
+      
+      path = "/v1.0/#{account_id}#{path}"
           
       response = connection(CloudDns::API_BASE).send(method) do |request|
-        request.url("/v1.0/#{account_id}#{path}", params)
         request.headers.merge!(headers)
+        
+        case request.method
+          when :delete, :get
+            request.url(path, params)
+          when :put, :post
+            request.path = path
+            request.body = MultiJson.encode(params) unless params.empty?
+        end
       end
       response.body
     end
