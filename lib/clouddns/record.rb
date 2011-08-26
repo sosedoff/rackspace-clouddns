@@ -41,8 +41,14 @@ module CloudDns
     
     # Returns true if record does not exists
     #
-    def new_record?
+    def new?
       @id.nil? || @created_at.nil?
+    end
+    
+    def to_hash
+      h = {'name' => @name, 'data' => @data, 'type' => @type, 'ttl' => @ttl}
+      h.merge!(:id => @id) unless new?
+      h
     end
   end
 end

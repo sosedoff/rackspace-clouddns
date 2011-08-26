@@ -54,6 +54,12 @@ module CloudDns
       @id.nil? || @account_id.nil? || @created_at.nil?
     end
     
+    # Save domain information
+    #
+    def save
+      # TODO
+    end
+    
     # Delete domain
     #
     def delete
