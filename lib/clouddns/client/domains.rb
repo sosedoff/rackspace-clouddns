@@ -47,7 +47,8 @@ module CloudDns
     # @return [CloudDns::AsyncResponse]
     #
     def delete_domain(id)
-      AsyncResponse.new(self, delete("/domains/#{id}"))
+      options = {'deleteSubdomains' => true}
+      AsyncResponse.new(self, delete("/domains/#{id}", options))
     end
   end
 end
