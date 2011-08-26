@@ -11,5 +11,7 @@ module CloudDns
   class NotImplemented     < Error; end # 501
   class BadGateway         < Error; end # 502
   class ServiceUnavailable < Error; end # 503
+  
+  class InvalidNameserver  < Error; end
 end
 

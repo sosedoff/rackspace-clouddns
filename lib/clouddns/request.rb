@@ -22,11 +22,15 @@ module CloudDns
     private
      
     # Perform a HTTP request
-    #   method - Request method => :get, :post, :put, :delete
-    #   path   - Request path
-    #   params - Custom request parameters
-    #   raw    - Return raw response
-    def request(method, path, params, raw=false)
+    #
+    # method - Request method, one of (:get, :post, :put, :delete)
+    # path   - Request path
+    # params - Custom request parameters hash (default: empty)
+    # raw    - Return raw response (default: false)
+    #
+    # @return [Hash]
+    #
+    def request(method, path, params={}, raw=false)
       authenticate if auth_token.nil?
       
       headers = {

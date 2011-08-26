@@ -1,19 +1,23 @@
 module CloudDns
   module Domains
-    # Get all domains associated with the account
+    # Get a list of domain on account
+    #
+    # @return [Array][CloudDns::Domain]
+    #
     def domains
       get("/domains")['domains'].map do |record|
-        d = CloudDns::Domain.new(record)
-        d.client = self
-        d
+        CloudDns::Domain.new(self, record)
       end
     end
     
     # Get a single domain details
+    #
+    # id - Domain ID
+    #
+    # @return [CloudDns::Domain]
+    #
     def domain(id)
-      d = CloudDns::Domain.new(get("/domains/#{id}"))
-      d.client = self
-      d
+      CloudDns::Domain.new(self, get("/domains/#{id}"))
     end
   end
 end
