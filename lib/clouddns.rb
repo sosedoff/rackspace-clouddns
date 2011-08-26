@@ -2,9 +2,9 @@ require 'clouddns/version'
 require 'clouddns/errors'
 require 'clouddns/connection'
 require 'clouddns/request'
+require 'clouddns/domain'
 require 'clouddns/nameserver'
 require 'clouddns/record'
-require 'clouddns/domain'
 require 'clouddns/client'
 
 module CloudDns

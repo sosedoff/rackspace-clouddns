@@ -13,5 +13,6 @@ module CloudDns
   class ServiceUnavailable < Error; end # 503
   
   class InvalidNameserver  < Error; end
+  class InvalidRecord      < Error; end
 end
 
