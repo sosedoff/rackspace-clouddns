@@ -52,7 +52,7 @@ describe CloudDns::Client do
     end
   
     it 'returns a single domain' do
-      stub_get('/domains/1', {}, 'domain.json')
+      stub_get('/domains/1', {'showRecords' => 'true', 'showSubdomains' => 'true'}, 'domain.json')
       domain = @client.domain(1)
       domain.should be_an CloudDns::Domain
       domain.id.should == 1

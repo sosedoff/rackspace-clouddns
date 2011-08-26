@@ -9,12 +9,13 @@ Gem::Specification.new do |s|
   s.authors     = ["Dan Sosedoff"]
   s.email       = ["dan.sosedoff@gmail.com"]
   
-  s.add_development_dependency 'rspec',         '~> 2.6'
-  s.add_development_dependency 'webmock',       '~> 1.6'
+  s.add_development_dependency 'rspec',              '~> 2.6'
+  s.add_development_dependency 'webmock',            '~> 1.6'
   
-  s.add_runtime_dependency     'hashie',        '~> 1.0.0'
-  s.add_runtime_dependency     'yajl-ruby',     '~> 0.8'
-  s.add_runtime_dependency     'rest-client',   '~> 1.6'
+  s.add_runtime_dependency     'hashie',             '~> 1.0.0'
+  s.add_runtime_dependency     'faraday',            '~> 0.7.4'
+  s.add_runtime_dependency     'faraday_middleware', '~> 0.7.0'
+  s.add_runtime_dependency     'multi_json',         '~> 1.0.3'
   
   s.files              = `git ls-files`.split("\n")
   s.test_files         = `git ls-files -- {test,spec,features}/*`.split("\n")
