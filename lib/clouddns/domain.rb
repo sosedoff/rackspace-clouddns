@@ -53,5 +53,11 @@ module CloudDns
     def new?
       @id.nil? || @account_id.nil? || @created_at.nil?
     end
+    
+    # Delete domain
+    #
+    def delete
+      @client.delete_domain(self.id)
+    end
   end
 end

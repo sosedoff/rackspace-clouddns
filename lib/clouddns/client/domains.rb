@@ -39,5 +39,15 @@ module CloudDns
     def create_domain(name)
       post('/domains', :domains => [{:name => name}])
     end
+    
+    # Delete an existing domain. Returns an AsyncResponse instance
+    #
+    # id - Domain ID
+    #
+    # @return [CloudDns::AsyncResponse]
+    #
+    def delete_domain(id)
+      AsyncResponse.new(self, delete("/domains/#{id}"))
+    end
   end
 end
