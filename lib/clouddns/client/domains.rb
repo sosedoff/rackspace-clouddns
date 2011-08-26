@@ -29,5 +29,15 @@ module CloudDns
       
       CloudDns::Domain.new(self, get("/domains/#{id}", options))
     end
+    
+    # Create a new domain under the account
+    #
+    # name - New domain name
+    #
+    # @return [CloudDns::Domain]
+    #
+    def create_domain(name)
+      post('/domains', :domains => [{:name => name}])
+    end
   end
 end
