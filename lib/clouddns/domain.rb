@@ -38,7 +38,7 @@ module CloudDns
       @ttl        = h.ttl
       
       # Load nameservers records if present
-      if h.nameservers
+      if h.nameservers.kind_of?(Array)
         @nameservers = h.nameservers.map { |ns| CloudDns::Nameserver.new(ns.name) }
       end
       
@@ -46,6 +46,12 @@ module CloudDns
       if h['recordsList']
         @records = h['recordsList'].records.map { |r| CloudDns::Record.new(client, r) }
       end
+    end
+    
+    # Returns true if domain is a new record
+    #
+    def new?
+      @id.nil? || @account_id.nil? || @created_at.nil?
     end
   end
 end
