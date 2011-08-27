@@ -67,7 +67,7 @@ module CloudDns
     #
     # domain - CloudDns::Domain instance
     #
-    # @return [CloudDns::AsyncResponse]
+    # @return [CloudDns::ExportRecord]
     #
     def export_domain(domain)
       resp = AsyncResponse.new(self, get("/domains/#{domain.id}/export"))
