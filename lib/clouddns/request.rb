@@ -4,6 +4,9 @@ require 'faraday/response/raise_clouddns_error'
 
 module CloudDns
   module Request
+    
+    protected
+    
     def get(path, options={})
       request(:get, path, options)
     end
