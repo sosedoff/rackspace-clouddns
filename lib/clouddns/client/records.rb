@@ -42,11 +42,5 @@ module CloudDns
       resp = delete("/domains/#{domain_id(domain)}/records/#{record_id(record)}")
       CloudDns::AsyncResponse.new(self, resp)
     end
-    
-    private
-    
-    def record_id(obj)
-      obj.kind_of?(CloudDns::Record) ? obj.id : obj.to_s
-    end
   end
 end

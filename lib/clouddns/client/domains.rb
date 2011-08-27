@@ -92,11 +92,5 @@ module CloudDns
       sleep 2
       ExportRecord.new(resp)
     end
-    
-    private
-    
-    def domain_id(obj)
-      obj.kind_of?(CloudDns::Domain) ? obj.id : obj.to_s
-    end
   end
 end
