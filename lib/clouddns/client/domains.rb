@@ -66,9 +66,16 @@ module CloudDns
     #
     # domain - CloudDns::Domain instance
     #
-    def update_domain(domain)
-      # Update domain records
+    def update_domain(domain)    
+      changed_records = domain.records.select { |r| r.changed? }.map(&:to_hash)
       new_records = domain.records.select { |r| r.new? }.map(&:to_hash)
+      
+      # Update existing records first
+      unless changed_records.empty?
+        put("/domains/#{domain.id}/records", {:records => changed_records})
+      end
+      
+      # Create new records
       unless new_records.empty?
         post("/domains/#{domain.id}/records", {:records => new_records})
       end

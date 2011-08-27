@@ -96,6 +96,23 @@ module CloudDns
       @records << CloudDns::Record.new(@client, options)
     end
     
+    # Get all records by type
+    #
+    # type - Record type (A, AAAA, CNAME, MX, ...)
+    #
+    # return [Array][CloudDns::Record]
+    #
+    def get_records(type)
+      unless Record::TYPES.include?(type)
+        raise ArgumentError, "Invalid record type: #{type}"
+      end
+      @records.select { |r| r.type == type }
+    end
+    
+    #
+    # Shorthands to add new specific records
+    #
+    
     def a    (options={}) ; add_record(options.merge(:type => 'A'))     ; end
     def aaaa (options={}) ; add_record(options.merge(:type => 'AAAA'))  ; end
     def cname(options={}) ; add_record(options.merge(:type => 'CNAME')) ; end
@@ -104,5 +121,16 @@ module CloudDns
     def txt  (options={}) ; add_record(options.merge(:type => 'TXT'))   ; end
     def srv  (options={}) ; add_record(options.merge(:type => 'SRV'))   ; end
     
+    #
+    # Shorthands to get records by type
+    #
+  
+    def a_records     ; get_records('A')     ; end
+    def aaaa_records  ; get_records('AAAA')  ; end
+    def cname_records ; get_records('CNAME') ; end
+    def ns_records    ; get_records('NS')    ; end
+    def mx_records    ; get_records('MX')    ; end
+    def txt_records   ; get_records('TXT')   ; end
+    def srv_records   ; get_records('SRC')   ; end
   end
 end
