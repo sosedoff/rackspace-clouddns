@@ -23,8 +23,6 @@ end
 def stub_headers
   {
     'Accept'       => 'application/json',
-    'X-Auth-User'  => 'foo',
-    'X-Auth-Key'   => 'bar',
     'X-Auth-Token' => 'AUTH_TOKEN'
   }
 end

@@ -28,7 +28,7 @@ module CloudDns
       
       data = {'records' => [record.to_hash]}
       resp = post("/domains/#{domain_id(domain)}/records", data)
-      CloudDns::AsyncResponse.new(resp)
+      CloudDns::AsyncResponse.new(self, resp)
     end
     
     # Delete an existing domain record
@@ -40,7 +40,7 @@ module CloudDns
     #
     def delete_record(domain, record)
       resp = delete("/domains/#{domain_id(domain)}/records/#{record_id(record)}")
-      CloudDns::AsyncResponse.new(resp)
+      CloudDns::AsyncResponse.new(self, resp)
     end
     
     private
