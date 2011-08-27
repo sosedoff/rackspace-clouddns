@@ -45,10 +45,12 @@ module CloudDns
       raise InvalidRecord, "Record :type required!" if @type.empty?
       raise InvalidRecord, "Record :data required!" if @data.empty?
       
+      # Check if its a MX record, which requires priority value
       if mx? && @priority.nil?
         raise InvalidRecord, "Record :priority required!"  
       end
       
+      # Check the proper record type
       if !TYPES.include?(@type)
         raise InvalidRecord, "Invalid record type: #{@type}. Allowed types: #{TYPES.join(', ')}."
       end
