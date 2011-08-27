@@ -1,4 +1,5 @@
 require 'clouddns/client/domains'
+require 'clouddns/client/records'
 require 'clouddns/client/statuses'
 
 module CloudDns
@@ -9,6 +10,7 @@ module CloudDns
     include CloudDns::Request
     include CloudDns::Connection
     include CloudDns::Domains
+    include CloudDns::Records
     include CloudDns::Statuses
     
     # Initialize a new CloudDns::Client object

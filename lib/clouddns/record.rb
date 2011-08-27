@@ -22,6 +22,7 @@ module CloudDns
       @id         = data.id
       @name       = data.name.to_s.strip
       @type       = data.type.to_s.strip
+      @data       = data.data.to_s.strip
       @ttl        = data.ttl || DEFAULT_TTL
       @created_at = data.created
       @updated_at = data.updated
@@ -33,6 +34,7 @@ module CloudDns
       
       raise InvalidRecord, "Record :name required!" if @name.empty?
       raise InvalidRecord, "Record :type required!" if @type.empty?
+      raise InvalidRecord, "Record :data required!" if @data.empty?
       
       if !TYPES.include?(@type)
         raise InvalidRecord, "Invalid record type: #{@type}. Allowed types: #{TYPES.join(', ')}."
@@ -42,7 +44,7 @@ module CloudDns
     # Returns true if record does not exists
     #
     def new?
-      @id.nil? || @created_at.nil?
+      @id.nil? && @created_at.nil?
     end
     
     def to_hash
