@@ -1,0 +1,6 @@
+{
+  "id":1,
+   "contentType":"BIND_9",
+   "contents":"secondlevel434706.com.\t3600\tIN\tSOA\tns2.rackspace.com. hostmaster.secondlevel434706.com. 1308946354 3600 3600 3600 3600\nsecondlevel434706.com.\t3600\tIN\tA\t172.11.122.24\nsecondlevel434706.com.\t3600\tIN\tA\t172.23.2.212\nsecondlevel434706.com.\t3600\tIN\tNS\tdns1.stabletransit.com.\nsecondlevel434706.com.\t3600\tIN\tNS\tdns2.stabletransit.com.\nsecondlevel434706.com.\t5000\tIN\tMX\t2 mail.secondlevel434706.com.\nsub.secondlevel434706.com.\t3600\tIN\tCNAME\tdev.secondlevel434706.com.\n",
+   "accountId":12345
+}

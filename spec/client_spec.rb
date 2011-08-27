@@ -31,7 +31,6 @@ describe CloudDns::Client do
     end
   end
   
-  
   context 'with authentication' do
     before :each do
       @client = CloudDns::Client.new(:username => 'foo', :api_key => 'bar')
@@ -59,6 +58,11 @@ describe CloudDns::Client do
       domain.name.should == 'foobar.com'
       domain.client.should == @client
       domain.nameservers.size.should == 2
+    end
+    
+    it 'raises CloudDns::NotFound if requested domain does not exist' do
+      stub_failure(:get, '/domains/2', {}, 404)
+      proc { @client.domain(2, {}) }.should raise_error CloudDns::NotFound
     end
   end
 end

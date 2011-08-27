@@ -6,6 +6,7 @@ require 'clouddns/async_response'
 require 'clouddns/domain'
 require 'clouddns/nameserver'
 require 'clouddns/record'
+require 'clouddns/export_record'
 require 'clouddns/client'
 
 module CloudDns

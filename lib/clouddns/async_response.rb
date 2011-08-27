@@ -22,12 +22,10 @@ module CloudDns
       end
     end
     
-    # Check the job status
+    # Get the asynchronous response content
     #
-    # NOTE: Does not work. Does not return anything
-    #
-    def status
-      @status ||= @client.status(self.job_id) rescue ''  
+    def content
+      @content ||= @client.status(self.job_id)
     end
   end
 end

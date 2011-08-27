@@ -65,5 +65,9 @@ module CloudDns
     def delete
       new? ? false : @client.delete_domain(self)
     end
+    
+    def export
+      @client.export_domain(self)
+    end
   end
 end

@@ -62,5 +62,17 @@ module CloudDns
       options = {'deleteSubdomains' => true}
       AsyncResponse.new(self, delete("/domains/#{domain.id}", options))
     end
+    
+    # Export domain contents
+    #
+    # domain - CloudDns::Domain instance
+    #
+    # @return [CloudDns::AsyncResponse]
+    #
+    def export_domain(domain)
+      resp = AsyncResponse.new(self, get("/domains/#{domain.id}/export"))
+      sleep 2
+      ExportRecord.new(resp)
+    end
   end
 end

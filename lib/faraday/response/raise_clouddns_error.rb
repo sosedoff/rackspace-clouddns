@@ -7,6 +7,7 @@ module Faraday
         when 400 then raise CloudDns::BadRequest
         when 401 then raise CloudDns::Unauthorized
         when 403 then raise CloudDns::Forbidden
+        when 404 then raise CloudDns::NotFound
         when 406 then raise CloudDns::BadRequest
         when 409 then raise CloudDns::DomainExists
         when 413 then raise CloudDns::OverLimit

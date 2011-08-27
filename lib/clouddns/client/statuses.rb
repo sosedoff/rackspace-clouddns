@@ -1,11 +1,9 @@
 module CloudDns
   module Statuses
-    # Check job status
-    #
-    # job_id - Job ID from AsyncResponse object
+    # Get asynchronous response contents
     #
     def status(job_id)
-      get("/statuses/#{job_id}")
+      get("/status/#{job_id}")
     end
   end
 end

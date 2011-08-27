@@ -20,15 +20,17 @@ def auth_url
   "#{CloudDns::API_AUTH}/v1.0"
 end
 
-def stub_get(path, params, fixture_name)
-  headers = {
+def stub_headers
+  {
     'Accept'       => 'application/json',
     'X-Auth-User'  => 'foo',
     'X-Auth-Key'   => 'bar',
     'X-Auth-Token' => 'AUTH_TOKEN'
   }
-  
-  stub_options = {:headers => headers}
+end
+
+def stub_get(path, params, fixture_name)
+  stub_options = {:headers => stub_headers}
   stub_options.merge!(:query => params) unless (params || {}).empty?
   
   stub_request(:get, api_url(path)).with(stub_options).
@@ -37,6 +39,14 @@ def stub_get(path, params, fixture_name)
       :body => fixture(fixture_name),
       :headers => {}
     )
+end
+
+def stub_failure(method, path, params, status)
+  stub_options = {:headers => stub_headers}
+  stub_options.merge!(:query => params) unless (params || {}).empty?
+  
+  stub_request(method, api_url(path)).with(stub_options).
+    to_return(:status => status)
 end
 
 def stub_authentication(token='AUTH_TOKEN', account_id='12345')
