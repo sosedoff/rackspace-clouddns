@@ -74,11 +74,11 @@ module CloudDns
     #
     # domain - CloudDns::Domain instance
     #
-    # @return [CloudDns::AsyncResponse]
+    # @return [Hash]
     #
     def delete_domain(domain)
       options = {'deleteSubdomains' => true}
-      AsyncResponse.new(self, delete("/domains/#{domain.id}", options))
+      async_response(delete("/domains/#{domain.id}", options))    
     end
     
     # Export domain contents
