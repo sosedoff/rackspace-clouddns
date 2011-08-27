@@ -21,11 +21,13 @@ module CloudDns
     #
     # @return [Array][CloudDns::Domain]
     #
-    def domains(options={:limit => 10, :offset => 0})
+    def get_domains(options={:limit => 10, :offset => 0})
       get("/domains", options)['domains'].map do |record|
         CloudDns::Domain.new(self, record)
       end
     end
+    
+    alias :domains :get_domains
     
     # Get a single domain details
     #
@@ -37,13 +39,15 @@ module CloudDns
     #
     # @return [CloudDns::Domain]
     #
-    def domain(id, options={:records => true, :subdomains => true})
+    def get_domain(id, options={:records => true, :subdomains => true})
       params = {}
       params['showRecords']    = true if options[:records] == true
       params['showSubdomains'] = true if options[:subdomains] == true
       
       CloudDns::Domain.new(self, get("/domains/#{id}", params))
     end
+    
+    alias :domain :get_domain
     
     # Create a new domain under the account
     #
