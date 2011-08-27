@@ -29,7 +29,7 @@ module CloudDns
       @client     = client
       @id         = data.id
       @name       = data.name.to_s.strip
-      @type       = data.type.to_s.strip
+      @type       = data.type.to_s.strip.upcase
       @data       = data.data.to_s.strip
       @ttl        = data.ttl || DEFAULT_TTL
       @priority   = data.priority
