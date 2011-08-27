@@ -56,7 +56,7 @@ module CloudDns
     def txt?   ; @type == 'TXT'   ; end
     def ns?    ; @type == 'NS'    ; end
     def mx?    ; @type == 'MX'    ; end
-    def src?   ; @type == 'SRV'   ; end
+    def srv?   ; @type == 'SRV'   ; end
     
     # Returns true if record does not exists
     #
@@ -74,15 +74,13 @@ module CloudDns
     # 
     def to_hash
       h = {'name' => @name, 'data' => @data, 'type' => @type, 'ttl' => @ttl}
-      h.merge!(:id => @id) unless new?
-      h.merge!(:priority => @priority) if mx?
+      h[:id] = @id unless new?
+      h[:priority] = @priority if mx?
       h
     end
     
-    def to_json(options={})
-      MultiJson.encode(to_hash)
-    end
-    
+    # Returns a formatted string with record contents
+    #
     def to_s
       chunks = [@name, @ttl, 'IN', @type]
       chunks << @priority if mx?
@@ -92,6 +90,8 @@ module CloudDns
     
     private
     
+    # Calculate record checksum based on its string representation
+    #
     def checksum
       Digest::SHA1.hexdigest(to_s)
     end

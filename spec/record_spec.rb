@@ -42,4 +42,13 @@ describe 'CloudDns::Record' do
     r.data = '192.168.1.1'
     r.changed?.should == true
   end
+  
+  it 'responds to record type methods' do
+    methods = ['a?', 'aaaa?', 'mx?', 'ns?', 'txt?', 'cname?', 'srv?']
+    
+    r = CloudDns::Record.new(@client, :name => 'foo.bar', :type => 'A', :data => '127.0.0.1')
+    methods.each do |m|
+      r.respond_to?(m.to_sym).should be_true, "Does not respond to: #{m}"
+    end
+  end
 end
