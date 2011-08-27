@@ -49,8 +49,7 @@ module CloudDns
       
       headers = {
         'Accept'       => 'application/json',
-        'X-Auth-User'  => username,
-        'X-Auth-Key'   => api_key,
+        'Content-Type' => 'application/json',
         'X-Auth-Token' => auth_token
       }
       
