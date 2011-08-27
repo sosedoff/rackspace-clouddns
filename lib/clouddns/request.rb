@@ -68,7 +68,7 @@ module CloudDns
         end
       end
       
-      response.body
+      raw ? response : response.body
     end
     
     # Performs an authentication request
