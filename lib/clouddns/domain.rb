@@ -51,7 +51,7 @@ module CloudDns
     # Returns true if domain is a new record
     #
     def new?
-      @id.nil? || @account_id.nil? || @created_at.nil?
+      @id.nil? && @account_id.nil?
     end
     
     # Save domain information
