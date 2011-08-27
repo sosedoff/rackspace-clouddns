@@ -1,5 +1,16 @@
 module CloudDns
   module Domains
+    # Initialize (not create) a new domain
+    #
+    # name - Domain name
+    #
+    # @return [CloudDns::Domain]
+    #
+    def new_domain(name, options={})
+      options.merge!(:name => name)
+      CloudDns::Domain.new(self, options)
+    end
+    
     # Get a list of domain on account
     #
     # options - Options hash. Available options are:
@@ -40,8 +51,11 @@ module CloudDns
     #
     # @return [CloudDns::Domain]
     #
-    def create_domain(domain)
-      # TODO
+    def create_domain(name, email)
+      data = {'name' => name, 'emailAddress' => email}
+      resp = post("/domains", {:domains => [data]})
+      data = async_response(resp)['domains'].first
+      CloudDns::Domain.new(self, data)
     end
     
     # Update an existing domain information
@@ -49,7 +63,11 @@ module CloudDns
     # domain - CloudDns::Domain instance
     #
     def update_domain(domain)
-      # TODO
+      # Update domain records
+      new_records = domain.records.select { |r| r.new? }.map(&:to_hash)
+      unless new_records.empty?
+        post("/domains/#{domain.id}/records", {:records => new_records})
+      end
     end
     
     # Delete an existing domain. Returns an AsyncResponse instance

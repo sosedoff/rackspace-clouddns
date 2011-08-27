@@ -14,6 +14,7 @@ module CloudDns
     
     attr_accessor :name        # Domain primary name
     attr_accessor :ttl         # Domain TTL
+    attr_accessor :email       # Domain email address
     attr_accessor :nameservers # Collection of CloudDns::Nameserver objects
     attr_accessor :records     # Collection of CloudDns::Record objects
     
@@ -31,11 +32,20 @@ module CloudDns
       
       @client     = client
       @id         = h.id
-      @account_id = h.account_id
-      @name       = h.name
-      @created_at = Time.parse(h.created)
-      @updated_at = Time.parse(h.updated)
-      @ttl        = h.ttl
+      @account_id = h.account_id || h.accountId
+      @name       = h.name.to_s.strip
+      @email      = (h.emailAddress || h.email).to_s.strip
+      @created_at = h.created.nil? ? nil : Time.parse(h.created)
+      @updated_at = h.updated.nil? ? nil : Time.parse(h.updated)
+      @ttl        = h.ttl || CloudDns::Record::DEFAULT_TTL
+      
+      if @name.empty?
+        raise ArgumentError, "Domain :name required!"
+      end
+      
+      if @email.empty? && new?
+        raise ArgumentError, "Domain :emailAddress or :email required!"
+      end
       
       # Load nameservers records if present
       if h.nameservers.kind_of?(Array)
@@ -43,8 +53,9 @@ module CloudDns
       end
       
       # Load records list if present
+      @records = []
       if h['recordsList']
-        @records = h['recordsList'].records.map { |r| CloudDns::Record.new(client, r) }
+        h['recordsList'].records.map { |r| @records << CloudDns::Record.new(client, r) }
       end
     end
     
@@ -69,5 +80,29 @@ module CloudDns
     def export
       @client.export_domain(self)
     end
+    
+    # Add a new domain record
+    #
+    # options - Domain record options
+    #
+    # options[:name] - Record name
+    # options[:type] - Record type (A, CNAME, MX, NS, TXT, etc)
+    # options[:data] - Record content (ip address, etc.)
+    # options[:ttl]  - Record TTL (default: 3600)
+    #
+    # @return [CloudDns::Record]
+    #
+    def add_record(options={})
+      @records << CloudDns::Record.new(@client, options)
+    end
+    
+    def a    (options={}) ; add_record(options.merge(:type => 'A'))     ; end
+    def aaaa (options={}) ; add_record(options.merge(:type => 'AAAA'))  ; end
+    def cname(options={}) ; add_record(options.merge(:type => 'CNAME')) ; end
+    def ns   (options={}) ; add_record(options.merge(:type => 'NS'))    ; end
+    def mx   (options={}) ; add_record(options.merge(:type => 'MX'))    ; end
+    def txt  (options={}) ; add_record(options.merge(:type => 'TXT'))   ; end
+    def srv  (options={}) ; add_record(options.merge(:type => 'SRV'))   ; end
+    
   end
 end

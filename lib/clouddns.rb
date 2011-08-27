@@ -1,5 +1,6 @@
 require 'clouddns/version'
 require 'clouddns/errors'
+require 'clouddns/template'
 require 'clouddns/connection'
 require 'clouddns/request'
 require 'clouddns/async_response'

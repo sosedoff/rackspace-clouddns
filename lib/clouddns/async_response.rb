@@ -32,7 +32,7 @@ module CloudDns
     # Get the asynchronous response content
     #
     def content
-      @content ||= @client.status(self.job_id)
+      @client.status(self.job_id)
     end
   end
 end

@@ -1,3 +1,4 @@
+# require 'multi_json'
 require 'faraday_middleware'
 require 'faraday/response/raise_clouddns_error'
 
@@ -54,7 +55,7 @@ module CloudDns
       }
       
       path = "/v1.0/#{account_id}#{path}"
-          
+        
       response = connection(CloudDns::API_BASE).send(method) do |request|
         request.headers.merge!(headers)
         
@@ -66,15 +67,17 @@ module CloudDns
             request.body = MultiJson.encode(params) unless params.empty?
         end
       end
+      
       response.body
     end
     
     # Performs an authentication request
     def authentication_request
       headers = {
-        'Accept'      => 'application/json',
-        'X-Auth-User' => username || '',
-        'X-Auth-Key'  => api_key  || '',
+        'Content-Type' => 'application/json',
+        'Accept'       => 'application/json',
+        'X-Auth-User'  => username || '',
+        'X-Auth-Key'   => api_key  || '',
       }
       
       response = connection(CloudDns::API_AUTH).send(:get) do |request|
