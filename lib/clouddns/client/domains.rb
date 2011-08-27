@@ -88,9 +88,9 @@ module CloudDns
     # @return [CloudDns::ExportRecord]
     #
     def export_domain(domain)
-      resp = AsyncResponse.new(self, get("/domains/#{domain.id}/export"))
-      sleep 2
-      ExportRecord.new(resp)
+      resp = get("/domains/#{domain.id}/export")
+      data = async_response(resp)
+      ExportRecord.new(data)
     end
   end
 end

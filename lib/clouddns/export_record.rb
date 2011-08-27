@@ -5,12 +5,14 @@ module CloudDns
     attr_reader :type          # Export content type (software)
     attr_reader :content       # Raw records contents
     
-    def initialize(response)
-      unless response.kind_of?(CloudDns::AsyncResponse)
-        raise ArgumentError, "CloudDns::AsyncResponse required!"
+    # Initialize a new CloudDns::ExportRecord instance
+    #
+    # data - Hash with record details
+    #
+    def initialize(data)
+      unless data.kind_of?(Hash)
+        raise ArgumentError, "Data required!"
       end
-      
-      data = response.content
       
       @id         = data['id']
       @account_id = data['accountId']
