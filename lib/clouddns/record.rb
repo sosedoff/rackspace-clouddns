@@ -8,8 +8,15 @@ module CloudDns
     TYPES = %w(A AAAA CNAME MX NS TXT SRV)
     DEFAULT_TTL = 3600
     
-    attr_reader :id, :created_at, :updated_at
-    attr_accessor :name, :type, :data, :ttl, :priority
+    attr_reader   :id          # ID from rackspace
+    attr_reader   :created_at  # Creation timestamp
+    attr_reader   :updated_at  # Last update timestamp
+    
+    attr_accessor :name        # Record name or title
+    attr_accessor :type        # Record type (A, CNAME, MX, ...)
+    attr_accessor :data        # Record contents (ip address, etc.)
+    attr_accessor :ttl         # Record TTL (default: 3600)
+    attr_accessor :priority    # MX record priority (optional for other types)
     
     # Initialize a new CloudDns::Record instance
     #
