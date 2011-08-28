@@ -12,6 +12,7 @@ require 'clouddns/client'
 
 module CloudDns
   @@logger = false
+  @@fetch_async_responses = true
   
   # Set logger mode
   #
@@ -25,6 +26,14 @@ module CloudDns
   #
   def self.log_requests
     @@logger
+  end
+  
+  def self.fetch_async_responses= (value)
+    @@fetch_async_responses = value == true
+  end
+  
+  def self.fetch_async_responses
+    @@fetch_async_responses
   end
   
   class << self

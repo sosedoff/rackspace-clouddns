@@ -24,15 +24,19 @@ module CloudDns
     # retries   - How many times are we doing it before giving up (default: 10)
     # 
     def async_response(data, wait_time=ASYNC_WAIT_TIME, retries=ASYNC_WAIT_RETRIES)
-      raise ArgumentError, "Wait time should be > 0" if wait_time <= 0    
-      raise ArgumentError, "Retries number should be positive" if retries < 0
+      if CloudDns.fetch_async_responses
+        raise ArgumentError, "Wait time should be > 0" if wait_time <= 0    
+        raise ArgumentError, "Retries number should be positive" if retries < 0
+        
+        resp = AsyncResponse.new(self, data)
       
-      resp = AsyncResponse.new(self, data)
-      
-      retries.times do
-        sleep(wait_time)
-        content = resp.content
-        return content unless content.key?('jobId')
+        retries.times do
+          sleep(wait_time)
+          content = resp.content
+          return content unless content.key?('jobId')
+        end
+      else
+        AsyncResponse.new(self, data)
       end
     end
   end
