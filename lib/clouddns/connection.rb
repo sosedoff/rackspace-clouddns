@@ -33,7 +33,12 @@ module CloudDns
         retries.times do
           sleep(wait_time)
           content = resp.content
-          return content unless content.key?('jobId')
+          
+          unless content.nil?
+            return content if content.kind_of?(Hash) && !content.key?('jobId')
+          else
+            return nil
+          end
         end
       else
         AsyncResponse.new(self, data)
