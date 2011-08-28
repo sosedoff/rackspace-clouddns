@@ -102,7 +102,7 @@ module CloudDns
     #
     # return [Array][CloudDns::Record]
     #
-    def get_records(type)
+    def find_records(type)
       unless Record::TYPES.include?(type)
         raise ArgumentError, "Invalid record type: #{type}"
       end
@@ -125,12 +125,12 @@ module CloudDns
     # Shorthands to get records by type
     #
   
-    def a_records     ; get_records('A')     ; end
-    def aaaa_records  ; get_records('AAAA')  ; end
-    def cname_records ; get_records('CNAME') ; end
-    def ns_records    ; get_records('NS')    ; end
-    def mx_records    ; get_records('MX')    ; end
-    def txt_records   ; get_records('TXT')   ; end
-    def srv_records   ; get_records('SRC')   ; end
+    def a_records     ; find_records('A')     ; end
+    def aaaa_records  ; find_records('AAAA')  ; end
+    def cname_records ; find_records('CNAME') ; end
+    def ns_records    ; find_records('NS')    ; end
+    def mx_records    ; find_records('MX')    ; end
+    def txt_records   ; find_records('TXT')   ; end
+    def srv_records   ; find_records('SRC')   ; end
   end
 end
