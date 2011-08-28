@@ -12,6 +12,21 @@ module CloudDns
       CloudDns::Record.new(self, resp)
     end
     
+    alias :record :get_record
+    
+    # Get all existing domain records
+    #
+    # domain - CloudDns::Domain instance or domain ID
+    #
+    # @return [Array][CloudDns::Record]
+    #
+    def get_records(domain)
+      resp = get("/domains/#{domain_id(domain)}/records")
+      resp['records'].map { |r| CloudDns::Record.new(self, r) }
+    end
+    
+    alias :records :get_records
+    
     # Add a new domain record
     #
     # domain - CloudDns::Domain instance or domain ID

@@ -17,6 +17,7 @@ module CloudDns
     attr_accessor :data        # Record contents (ip address, etc.)
     attr_accessor :ttl         # Record TTL (default: 3600)
     attr_accessor :priority    # MX record priority (optional for other types)
+    attr_accessor :comment     # Optional record comment
     
     # Initialize a new CloudDns::Record instance
     #
@@ -33,6 +34,7 @@ module CloudDns
       @data       = data.data.to_s.strip
       @ttl        = data.ttl || DEFAULT_TTL
       @priority   = data.priority
+      @comment    = data.comment
       @created_at = data.created
       @updated_at = data.updated
         
