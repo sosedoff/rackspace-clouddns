@@ -1,5 +1,6 @@
 require 'time'
 require 'hashie'
+require 'digest/sha1'
 
 module CloudDns
   class Base
@@ -57,12 +58,20 @@ module CloudDns
       if h['recordsList']
         h['recordsList'].records.map { |r| @records << CloudDns::Record.new(client, r) }
       end
+      
+      @original_checksum = checksum
     end
     
     # Returns true if domain is a new record
     #
     def new?
       @id.nil? && @account_id.nil?
+    end
+    
+    # Returns true if domain was changed
+    #
+    def changed?
+      new? ? false : @original_checksum != checksum
     end
     
     # Save domain information
@@ -132,5 +141,11 @@ module CloudDns
     def mx_records    ; find_records('MX')    ; end
     def txt_records   ; find_records('TXT')   ; end
     def srv_records   ; find_records('SRC')   ; end
+    
+    private
+    
+    def checksum
+      Digest::SHA1.hexdigest([@name, @email, @ttl].join)
+    end
   end
 end
