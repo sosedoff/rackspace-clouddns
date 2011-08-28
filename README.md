@@ -15,38 +15,117 @@ Install via github:
     git clone git@github.com:sosedoff/rackspace-clouddns.git
     cd rackspace-clouddns
     bundle install
-    gem build rackspace-clouddns.gemspec
-    gem install rackspace-clouddns-0.1.0.gem
+    rake install
 
 ## Usage
 
-Authentication:
+**Create a CloudDns client**
 
-    dns = CloudDns::Client.new(:username => 'API USERNAME', :api_key => 'API KEY'
+```ruby
+dns = CloudDns::Client.new(:username => 'API USERNAME', :api_key => 'API KEY')
 
-Or: *shorthand*
+# or via shortcut
+dns = CloudDns.new(:username => 'foo', :api_key => 'bar')
+```
 
-    dns = CloudDns.new(:username => 'foo', :api_key => 'bar')
+**Get a list of all existing domains**
 
-Get all domains under the account:
+```ruby
+# Get list of 10 domains
+domains = dns.domains
 
-    dns.domains.each do |d|
-      d.id            # ID
-      d.name          # Name
-      d.created       # Creation timestamp
-      d.updated       # Modification timestamp
-      d.ttl           # Domain TTL
-      d.nameservers   # Array of nameservers
-      d.record_list   # Hash containing all the records and stats
-    end
+# Get 50 domains with offset
+domains = dns.domains(:limit => 50, :offet => 10)
 
-Get a single domain:
+# Search domains by name
+domains = dns.domains(:name => 'foo.com')        
+```
 
-    dns.domain(ID)
+**Get a list of all domain records**
 
-## TODO
+```ruby
+domain = dns.domain(12345)
 
-More features are coming
+# returns all records
+records = domain.records
+
+# get only specific type of records
+# types are: A, AAAA, CNAME, MX, NS, TXT, SRV
+records = domain.find_records('A')
+
+# or find records via shortcut
+records = domain.mx_records
+
+# find specific record
+record = domain.record('A-12345')
+```
+
+**Domain manipulation**
+
+```ruby
+domain = dns.domain(12345)
+
+domain.name = 'new.foo.com'
+
+# saves domain information
+domain.save 
+
+# deletes the domain
+domain.delete
+
+# create a new domain
+domain = dns.create_domain('foo.com', :email => 'your@email.com')
+
+# returns true if domain is new
+domain.new?
+```
+
+**Domain records manupulation**
+
+```ruby
+domain = dns.domain(12345)
+
+# Add a new record
+domain.add_record(:type => 'A', :name => 'foo.com', :data => '127.0.0.1', :ttl => 3600)
+
+# Or add via shortcut:
+domain.a(:name => 'foo.com', :data => '127.0.0.1')
+domain.cname(:name => 'www.foo.com', :data => 'foo.com')
+domain.ns(:name => 'ns.rackspace.com', :data => 'ns.rackspace.com')
+domain.mx(:name => 'mail.foo.com', :data => 'mail.google.com', :priority => 10)
+
+# Edit an existing record:
+
+record = domain.a_records.first
+record.data = 'NEW_IP_ADDRESS'
+record.save     # save this records directly
+
+# Delete the record
+record.delete 
+
+# Save domain (all new records will be created and all changed will be updated)
+domain.save
+```
+
+**Useful record methods**
+
+```ruby
+# returns true if this record does not exist
+record.new?    
+
+# returns true if record data was changed
+record.changed? 
+
+# shortcuts to check if record is a specific one
+record.a?
+record.aaaa? # ipv6
+record.mx?
+record.cname?
+record.txt?
+record.ns?
+record.srv?
+```
+
 
 ## License
 
