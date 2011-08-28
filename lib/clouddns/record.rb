@@ -5,7 +5,7 @@ module CloudDns
   class Record < Base
     include CloudDns::Records
     
-    TYPES = %w(A AAAA CNAME MX NS TXT SRV)
+    TYPES       = %w(A AAAA CNAME MX NS TXT SRV)
     DEFAULT_TTL = 3600
     
     attr_reader   :id          # ID from rackspace
