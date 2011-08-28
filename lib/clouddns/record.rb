@@ -78,7 +78,7 @@ module CloudDns
     # Returns true if record was changed
     #
     def changed?
-      checksum != @original_checksum
+      new? ? false : checksum != @original_checksum
     end
     
     # Returns a hash containing the record data for API usage
