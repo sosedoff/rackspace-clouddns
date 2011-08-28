@@ -69,5 +69,15 @@ module CloudDns
       resp = delete("/domains/#{domain_id(domain)}/records/#{record_id(record)}")
       async_response(resp)
     end
+    
+    # Delete multiple domain records
+    #
+    # domain - CloudDns::Domain instance or domain ID
+    #
+    def delete_records(domain, records)
+      ids = records.map { |r| {:id => record_id(r)} }
+      resp = delete("/domains/#{domain_id(domain)}/records", ids)
+      async_response(resp)
+    end
   end
 end
