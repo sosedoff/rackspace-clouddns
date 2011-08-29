@@ -23,8 +23,11 @@ module CloudDns
     # options[:api_key]  - RackspaceCloud API key
     #
     def initialize(options={})
-      @username   = options[:username]
-      @api_key    = options[:api_key]
+      @username   = options[:username].to_s
+      @api_key    = options[:api_key].to_s
+      
+      raise ArgumentError, "Client :username required!" if @username.empty?
+      raise ArgumentError, "Client :api_key required!"  if @api_key.empty?
     end
   end
 end
