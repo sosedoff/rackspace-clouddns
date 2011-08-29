@@ -5,7 +5,9 @@ require 'clouddns/client/statuses'
 
 module CloudDns
   class Client
-    attr_reader :username, :api_key, :auth_token
+    attr_reader :username
+    attr_reader :api_key
+    attr_reader :auth_token
     attr_reader :account_id
     
     include CloudDns::Request
