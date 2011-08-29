@@ -126,7 +126,6 @@ record.ns?
 record.srv?
 ```
 
-
 ## License
 
 Copyright &copy; 2011 Dan Sosedoff.

@@ -17,9 +17,10 @@ module CloudDns
     
     # Initialize a new CloudDns::Client object
     # 
-    # options - Set of configuration options:
-    #   :username   - RackspaceCloud API username
-    #   :api_key    - RackspaceCloud API key
+    # options - Set of configuration options
+    #
+    # options[:username] - RackspaceCloud API username
+    # options[:api_key]  - RackspaceCloud API key
     #
     def initialize(options={})
       @username   = options[:username]

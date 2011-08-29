@@ -1,4 +1,5 @@
 require 'clouddns/version'
+require 'clouddns/configuration'
 require 'clouddns/errors'
 require 'clouddns/template'
 require 'clouddns/connection'
@@ -11,30 +12,7 @@ require 'clouddns/export_record'
 require 'clouddns/client'
 
 module CloudDns
-  @@logger = false
-  @@fetch_async_responses = true
-  
-  # Set logger mode
-  #
-  # value - Enable/disable logger
-  #
-  def self.log_requests= (value)
-    @@logger = value == true
-  end
-  
-  # Return current logger state
-  #
-  def self.log_requests
-    @@logger
-  end
-  
-  def self.fetch_async_responses= (value)
-    @@fetch_async_responses = value == true
-  end
-  
-  def self.fetch_async_responses
-    @@fetch_async_responses
-  end
+  extend CloudDns::Configuration
   
   class << self
     # Shorthand to CloudDns::Client.new
