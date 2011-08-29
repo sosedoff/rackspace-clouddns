@@ -1,15 +1,18 @@
 require 'spec_helper'
 
 describe CloudDns::Client do
-  context 'on authentication' do 
-    it 'raises CloudDns::Unauthorized exception' do
-      stub_request(:get, auth_url).
-         with(:headers => {'Accept'=>'application/json', 'X-Auth-Key'=>'', 'X-Auth-User'=>''}).
-         to_return(:status => 401, :body => "", :headers => {})
+  it 'raises Argument error if no credentials were provided' do
+    proc { CloudDns.new }.
+      should raise_error ArgumentError, "Client :username required!"
       
-      proc { CloudDns.new.authenticate }.should raise_error CloudDns::Unauthorized
-    end
-    
+    proc { CloudDns.new(:username => 'foo') }.
+      should raise_error ArgumentError, "Client :api_key required!"
+      
+    proc { CloudDns.new(:username => 'foo', :api_key => 'bar') }.
+      should_not raise_error
+  end
+  
+  context 'on authentication' do 
     it 'raises CloudDns::Unauthorized exception for invalid credentials' do
       stub_request(:get, auth_url).
          with(:headers => {'Accept'=>'application/json', 'X-Auth-Key'=>'key', 'X-Auth-User'=>'invalid'}).
