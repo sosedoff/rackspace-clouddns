@@ -20,4 +20,12 @@ describe 'CloudDns::AsyncResponse' do
     resp = CloudDns::AsyncResponse.new(@client, '5fa38d01-1805-4f4f-a41a-56a3859f7ea0')
     resp.content.should be_a Hash
   end
+  
+  it 'returns a hash' do
+    resp = CloudDns::AsyncResponse.new(@client, '5fa38d01-1805-4f4f-a41a-56a3859f7ea0')
+    h = resp.to_hash
+    h.should be_a Hash
+    h.key?(:job_id).should be_true
+    h.key?(:callback_url).should be_true
+  end
 end
