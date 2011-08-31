@@ -44,20 +44,8 @@ module CloudDns
         raise ArgumentError, "CloudDns::Client required!"
       end
       
-      # Check if we've got all the data
-      raise InvalidRecord, "Record :name required!" if @name.empty?
-      raise InvalidRecord, "Record :type required!" if @type.empty?
-      raise InvalidRecord, "Record :data required!" if @data.empty?
-      
-      # Check if its a MX record, which requires priority value
-      if mx? && @priority.nil?
-        raise InvalidRecord, "Record :priority required!"  
-      end
-      
-      # Check the proper record type
-      if !TYPES.include?(@type)
-        raise InvalidRecord, "Invalid record type: #{@type}. Allowed types: #{TYPES.join(', ')}."
-      end
+      validate_record
+      validate_record_data
       
       # Calculate checksum to track changes
       @original_checksum = checksum
@@ -102,6 +90,37 @@ module CloudDns
     end
     
     private
+    
+    # Validate record
+    #
+    def validate_record
+      # Check if we've got all the data
+      raise InvalidRecord, "Record :name required!" if @name.empty?
+      raise InvalidRecord, "Record :type required!" if @type.empty?
+      raise InvalidRecord, "Record :data required!" if @data.empty?
+      
+      # Check if its a MX record, which requires priority value
+      if mx? && @priority.nil?
+        raise InvalidRecord, "Record :priority required!"  
+      end
+      
+      # Check the proper record type
+      if !TYPES.include?(@type)
+        raise InvalidRecord, "Invalid record type: #{@type}. Allowed types: #{TYPES.join(', ')}."
+      end
+    end
+    
+    # Validate record data based on its type
+    #
+    def validate_record_data
+      if a?
+        raise InvalidRecord, "Invalid IP: #{@data}" if !validate_ip(@data)
+      end
+      
+      if ns?
+        raise InvalidRecord, "Invalid domain: #{@data}" if !validate_domain(@data)
+      end
+    end
     
     # Calculate record checksum based on its string representation
     #

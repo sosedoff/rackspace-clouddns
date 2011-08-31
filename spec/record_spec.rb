@@ -6,7 +6,7 @@ describe 'CloudDns::Record' do
     @client = CloudDns::Client.new(:username => 'foo', :api_key => 'bar')
   end
   
-  it 'validates record' do
+  it 'should be valid' do
     proc { CloudDns::Record.new(@client) }.
       should raise_error CloudDns::InvalidRecord, "Record :name required!"
       
@@ -18,6 +18,12 @@ describe 'CloudDns::Record' do
       
     proc { CloudDns::Record.new(@client, :type => 'MX', :data => 'mail.domain.com', :name => 'mail.domain.com') }.
       should raise_error CloudDns::InvalidRecord, "Record :priority required!"
+      
+    proc { CloudDns::Record.new(@client, :name => 'foo.bar', :type => 'NS', :data => 'foo') }.
+      should raise_error CloudDns::InvalidRecord, "Invalid domain: foo"
+      
+    proc { CloudDns::Record.new(@client, :name => 'foo.bar', :type => 'A', :data => 'foo') }.
+      should raise_error CloudDns::InvalidRecord, "Invalid IP: foo"
   end
   
   it 'should be new' do
