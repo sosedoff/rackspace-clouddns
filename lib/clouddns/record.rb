@@ -127,7 +127,7 @@ module CloudDns
     # Calculate record checksum based on its string representation
     #
     def checksum
-      str = [@name, @ttl, @type, @data, @priority].join('')
+      str = [@name, @ttl, @type, @data, @priority, @comment].join('')
       Digest::SHA1.hexdigest(str)
     end
   end
