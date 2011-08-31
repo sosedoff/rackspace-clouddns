@@ -3,6 +3,7 @@ require 'clouddns/client/records'
 
 module CloudDns
   class Record < Base
+    include CloudDns::Helpers
     include CloudDns::Records
     
     TYPES       = %w(A AAAA CNAME MX NS TXT SRV)

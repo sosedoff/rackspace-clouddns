@@ -1,6 +1,7 @@
 require 'clouddns/version'
 require 'clouddns/configuration'
 require 'clouddns/errors'
+require 'clouddns/helpers'
 require 'clouddns/template'
 require 'clouddns/connection'
 require 'clouddns/request'

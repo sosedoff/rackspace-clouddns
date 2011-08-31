@@ -8,6 +8,8 @@ module CloudDns
   end
   
   class Domain < Base
+    include CloudDns::Helpers
+    
     attr_reader   :id          # Domain primary ID
     attr_reader   :client_id   # Domain client ID
     attr_reader   :created_at  # Domain creation timestamp
