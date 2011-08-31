@@ -10,6 +10,7 @@ module CloudDns
     DEFAULT_TTL = 3600
     
     attr_reader   :id          # ID from rackspace
+    attr_reader   :domain_id   # Domain ID (optional, for direct calls)
     attr_reader   :created_at  # Creation timestamp
     attr_reader   :updated_at  # Last update timestamp
     
@@ -30,6 +31,7 @@ module CloudDns
       
       @client     = client
       @id         = data.id
+      @domain_id  = data.domain_id
       @name       = data.name.to_s.strip
       @type       = data.type.to_s.strip.upcase
       @data       = data.data.to_s.strip
