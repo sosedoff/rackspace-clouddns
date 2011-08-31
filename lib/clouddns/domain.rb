@@ -52,7 +52,9 @@ module CloudDns
       # Load records list if present
       @records = []
       if h['recordsList']
-        h['recordsList'].records.map { |r| @records << CloudDns::Record.new(client, r) }
+        h['recordsList'].records.map do |r|
+          @records << CloudDns::Record.new(client, r.merge(:domain_id => self.id))
+        end
       end
       
       @original_checksum = checksum
@@ -103,6 +105,7 @@ module CloudDns
     #
     def add_record(options={})
       r = CloudDns::Record.new(@client, options)
+      options.merge!(:domain_id => self.id)
       @records << r
       r
     end
