@@ -22,17 +22,5 @@ module CloudDns
     def new(options={})
       CloudDns::Client.new(options)
     end
-    
-    # Shorthand to CloudDns::Nameserver.new
-    #
-    # name - Nameserver name (ex.: 'rs.rackspace.com')
-    #
-    # @return [CloudDns::Nameserver]
-    #
-    def nameserver(name)
-      CloudDns::Nameserver.new(name)
-    end
-    
-    alias :ns :nameserver
   end
 end
