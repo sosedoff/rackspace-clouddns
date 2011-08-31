@@ -62,7 +62,6 @@ describe CloudDns::Client do
       domain.id.should == 1
       domain.name.should == 'foobar.com'
       domain.client.should == @client
-      domain.nameservers.size.should == 2
     end
     
     it 'raises CloudDns::NotFound if requested domain does not exist' do

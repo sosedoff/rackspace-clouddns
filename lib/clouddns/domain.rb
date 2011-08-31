@@ -16,7 +16,6 @@ module CloudDns
     attr_accessor :name        # Domain primary name
     attr_accessor :ttl         # Domain TTL
     attr_accessor :email       # Domain email address
-    attr_accessor :nameservers # Collection of CloudDns::Nameserver objects
     attr_accessor :records     # Collection of CloudDns::Record objects
     
     # Initialize a new CloudDns::Domain instance
@@ -46,11 +45,6 @@ module CloudDns
       
       if @email.empty? && new?
         raise ArgumentError, "Domain :emailAddress or :email required!"
-      end
-      
-      # Load nameservers records if present
-      if h.nameservers.kind_of?(Array)
-        @nameservers = h.nameservers.map { |ns| CloudDns::Nameserver.new(ns.name) }
       end
       
       # Load records list if present
