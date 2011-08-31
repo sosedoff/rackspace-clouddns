@@ -6,7 +6,7 @@ describe 'CloudDns::Record' do
     @client = CloudDns::Client.new(:username => 'foo', :api_key => 'bar')
   end
   
-  it 'validates record type' do
+  it 'validates record' do
     proc { CloudDns::Record.new(@client) }.
       should raise_error CloudDns::InvalidRecord, "Record :name required!"
       
@@ -15,19 +15,17 @@ describe 'CloudDns::Record' do
     
     proc { CloudDns::Record.new(@client, {:name => 'foo.bar', :type => 'FOO'}) }.
       should raise_error CloudDns::InvalidRecord, "Record :data required!"
-  end
-  
-  it 'validates mx record' do
+      
     proc { CloudDns::Record.new(@client, :type => 'MX', :data => 'mail.domain.com', :name => 'mail.domain.com') }.
       should raise_error CloudDns::InvalidRecord, "Record :priority required!"
   end
   
-  it 'returns true if new' do
+  it 'should be new' do
     r = CloudDns::Record.new(@client, :name => 'foo.bar', :type => 'A', :data => '127.0.0.1')
     r.new?.should == true
   end
   
-  it 'returns true if not new and was changed' do
+  it 'should be changed' do
     original_data = {
       :id         => 'A-12345',
       :created_at => Time.now,
