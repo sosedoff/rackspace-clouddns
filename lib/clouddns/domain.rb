@@ -102,7 +102,9 @@ module CloudDns
     # @return [CloudDns::Record]
     #
     def add_record(options={})
-      @records << CloudDns::Record.new(@client, options)
+      r = CloudDns::Record.new(@client, options)
+      @records << r
+      r
     end
     
     # Get all records by type
@@ -122,13 +124,13 @@ module CloudDns
     # Shorthands to add new specific records
     #
     
-    def a    (options={}) ; add_record(options.merge(:type => 'A'))     ; end
-    def aaaa (options={}) ; add_record(options.merge(:type => 'AAAA'))  ; end
-    def cname(options={}) ; add_record(options.merge(:type => 'CNAME')) ; end
-    def ns   (options={}) ; add_record(options.merge(:type => 'NS'))    ; end
-    def mx   (options={}) ; add_record(options.merge(:type => 'MX'))    ; end
-    def txt  (options={}) ; add_record(options.merge(:type => 'TXT'))   ; end
-    def srv  (options={}) ; add_record(options.merge(:type => 'SRV'))   ; end
+    def a    (name, options={}) ; add_record(options.merge(:name => name, :type => 'A'))     ; end
+    def aaaa (name, options={}) ; add_record(options.merge(:name => name, :type => 'AAAA'))  ; end
+    def cname(name, options={}) ; add_record(options.merge(:name => name, :type => 'CNAME')) ; end
+    def ns   (name, options={}) ; add_record(options.merge(:name => name, :type => 'NS'))    ; end
+    def mx   (name, options={}) ; add_record(options.merge(:name => name, :type => 'MX'))    ; end
+    def txt  (name, options={}) ; add_record(options.merge(:name => name, :type => 'TXT'))   ; end
+    def srv  (name, options={}) ; add_record(options.merge(:name => name, :type => 'SRV'))   ; end
     
     #
     # Shorthands to get records by type

@@ -20,4 +20,13 @@ describe 'CloudDns::Domain' do
     resp.account_id.should == 12345
     resp.content.empty?.should == false
   end
+  
+  it 'creates domain records via shortcuts' do
+    domain = @client.new_domain('foobar.com', :email => 'foo@bar.com')
+    
+    domain.a('foobar.com', :data => '127.0.0.1').a?.should be_true
+    domain.cname('dev.foobar.com', :data => 'www.foobar.com').cname?.should be_true
+    domain.mx('foobar.com', :priority => 10, :data => '127.0.0.1').mx?.should be_true
+    domain.ns('foobar.com', :data => 'ns.rackspace.com').ns?.should be_true
+  end
 end
