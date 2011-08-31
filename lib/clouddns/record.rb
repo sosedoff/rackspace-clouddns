@@ -43,6 +43,7 @@ module CloudDns
         raise ArgumentError, "CloudDns::Client required!"
       end
       
+      # Check if we've got all the data
       raise InvalidRecord, "Record :name required!" if @name.empty?
       raise InvalidRecord, "Record :type required!" if @type.empty?
       raise InvalidRecord, "Record :data required!" if @data.empty?

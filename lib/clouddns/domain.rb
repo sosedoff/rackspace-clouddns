@@ -86,6 +86,10 @@ module CloudDns
       new? ? false : @client.delete_domain(self)
     end
     
+    # Export domain data
+    #
+    # @return [CloudDns::ExportRecord]
+    #
     def export
       @client.export_domain(self)
     end

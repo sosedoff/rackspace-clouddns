@@ -83,23 +83,23 @@ module CloudDns
     
     # Delete an existing domain. Returns an AsyncResponse instance
     #
-    # domain - CloudDns::Domain instance
+    # domain - CloudDns::Domain instance or domain ID
     #
     # @return [Hash]
     #
     def delete_domain(domain)
       options = {'deleteSubdomains' => true}
-      async_response(delete("/domains/#{domain.id}", options))    
+      async_response(delete("/domains/#{domain_id(domain)}", options))    
     end
     
     # Export domain contents
     #
-    # domain - CloudDns::Domain instance
+    # domain - CloudDns::Domain instance or domain ID
     #
     # @return [CloudDns::ExportRecord]
     #
     def export_domain(domain)
-      resp = get("/domains/#{domain.id}/export")
+      resp = get("/domains/#{domain_id(domain)}/export")
       data = async_response(resp)
       ExportRecord.new(data)
     end
