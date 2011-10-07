@@ -127,13 +127,13 @@ module CloudDns
     # Shorthands to add new specific records
     #
     
-    def a    (name, options={}) ; add_record(options.merge(:name => name, :type => 'A'))     ; end
-    def aaaa (name, options={}) ; add_record(options.merge(:name => name, :type => 'AAAA'))  ; end
-    def cname(name, options={}) ; add_record(options.merge(:name => name, :type => 'CNAME')) ; end
-    def ns   (name, options={}) ; add_record(options.merge(:name => name, :type => 'NS'))    ; end
-    def mx   (name, options={}) ; add_record(options.merge(:name => name, :type => 'MX'))    ; end
-    def txt  (name, options={}) ; add_record(options.merge(:name => name, :type => 'TXT'))   ; end
-    def srv  (name, options={}) ; add_record(options.merge(:name => name, :type => 'SRV'))   ; end
+    def a    (name, options={}) ; add_record(options.merge(name.is_a?(String) ? {:name => name} : name).merge(:type => 'A'))     ; end
+    def aaaa (name, options={}) ; add_record(options.merge(name.is_a?(String) ? {:name => name} : name).merge(:type => 'AAAA'))  ; end
+    def cname(name, options={}) ; add_record(options.merge(name.is_a?(String) ? {:name => name} : name).merge(:type => 'CNAME')) ; end
+    def ns   (name, options={}) ; add_record(options.merge(name.is_a?(String) ? {:name => name} : name).merge(:type => 'NS'))    ; end
+    def mx   (name, options={}) ; add_record(options.merge(name.is_a?(String) ? {:name => name} : name).merge(:type => 'MX'))    ; end
+    def txt  (name, options={}) ; add_record(options.merge(name.is_a?(String) ? {:name => name} : name).merge(:type => 'TXT'))   ; end
+    def srv  (name, options={}) ; add_record(options.merge(name.is_a?(String) ? {:name => name} : name).merge(:type => 'SRV'))   ; end
     
     #
     # Shorthands to get records by type
@@ -152,5 +152,6 @@ module CloudDns
     def checksum
       Digest::SHA1.hexdigest([@name, @email, @ttl].join)
     end
+    
   end
 end
