@@ -55,6 +55,9 @@ module CloudDns
         h['recordsList'].records.map do |r|
           @records << CloudDns::Record.new(client, r.merge(:domain_id => self.id))
         end
+      else
+        # Lets get it!
+        @records = client.get_records(self)
       end
       
       @original_checksum = checksum

@@ -72,12 +72,12 @@ module CloudDns
       
       # Update existing records first
       unless changed_records.empty?
-        put("/domains/#{domain.id}/records", {:records => changed_records})
+        async_response(put("/domains/#{domain.id}/records", {:records => changed_records}))
       end
       
       # Create new records
       unless new_records.empty?
-        post("/domains/#{domain.id}/records", {:records => new_records})
+         async_response(post("/domains/#{domain.id}/records", {:records => new_records}))
       end
     end
     
