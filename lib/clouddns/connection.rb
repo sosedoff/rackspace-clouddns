@@ -35,7 +35,11 @@ module CloudDns
           content = resp.content
           
           unless content.nil?
-            return content if content.kind_of?(Hash) && !content.key?('jobId')
+            
+            if content.kind_of?(Hash)
+              return content if !content.key?('jobId')
+              raise_error(content['error']['code'].to_i,content['error'].to_s) if content['status'] == "ERROR"
+            end
           else
             return nil
           end

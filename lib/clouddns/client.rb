@@ -15,6 +15,7 @@ module CloudDns
     
     include CloudDns::Request
     include CloudDns::Connection
+    include CloudDns::ErrorHelper
     include CloudDns::Helpers
     include CloudDns::Domains
     include CloudDns::Records

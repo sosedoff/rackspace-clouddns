@@ -41,7 +41,7 @@ describe CloudDns::Client do
     end
     
     it 'returns a list of domains' do
-      stub_get('/domains', {:limit => '10', :offset => '0'}, 'domains.json')
+      stub_get('/domains?showDetails=true', {:limit => '10', :offset => '0'}, 'domains.json')
       domains = @client.domains    
       domains.should be_an Array
       domains.size.should == 2
@@ -54,7 +54,7 @@ describe CloudDns::Client do
     end
   
     it 'returns a single domain' do
-      stub_get('/domains/1', {'showRecords' => 'true', 'showSubdomains' => 'true'}, 'domain.json')
+      stub_get('/domains/1?showDetails=true', {'showRecords' => 'true', 'showSubdomains' => 'true'}, 'domain.json')
       
       domain = @client.domain(1)
       domain.should be_an CloudDns::Domain
@@ -65,7 +65,7 @@ describe CloudDns::Client do
     end
     
     it 'raises CloudDns::NotFound if requested domain does not exist' do
-      stub_failure(:get, '/domains/2', {}, 404)
+      stub_failure(:get, '/domains/2?showDetails=true', {}, 404)
       proc { @client.domain(2, {}) }.should raise_error CloudDns::NotFound
     end
   end

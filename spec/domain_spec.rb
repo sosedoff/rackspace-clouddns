@@ -3,14 +3,14 @@ require 'spec_helper'
 describe 'CloudDns::Domain' do
   before :all do
     stub_authentication
-    stub_get('/domains/1', {'showRecords' => 'true', 'showSubdomains' => 'true'}, 'domain.json')
+    stub_get('/domains/1', {'showDetails' => 'true', 'showRecords' => 'true', 'showSubdomains' => 'true'}, 'domain.json')
     
     @client = CloudDns::Client.new(:username => 'foo', :api_key => 'bar')
   end
   
   it 'returns CloudDns::ExportRecord for export' do
-    stub_get("/domains/1/export", {}, 'domain_export_async.json')
-    stub_get("/status/5fa38d01-1805-4f4f-a41a-56a3859f7ea0", {}, 'domain_export.json')
+    stub_get("/domains/1/export", {'showDetails' => 'true'}, 'domain_export_async.json')
+    stub_get("/status/5fa38d01-1805-4f4f-a41a-56a3859f7ea0", {'showDetails' => 'true'}, 'domain_export.json')
     
     domain = @client.domain(1)
     resp = domain.export
