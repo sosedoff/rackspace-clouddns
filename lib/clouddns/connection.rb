@@ -1,6 +1,6 @@
 module CloudDns
-  API_AUTH = 'https://auth.api.rackspacecloud.com'
-  API_BASE = 'https://dns.api.rackspacecloud.com'
+  API_AUTH = {:us => 'https://auth.api.rackspacecloud.com', :uk => 'https://lon.auth.api.rackspacecloud.com'}
+  API_BASE = {:us => 'https://dns.api.rackspacecloud.com', :uk => 'https://lon.dns.api.rackspacecloud.com'}
         
   module Connection
     ASYNC_WAIT_TIME    = 1     # Number of seconds before (and between) async requests.

@@ -13,11 +13,11 @@ def fixture(file)
 end
 
 def api_url(path='')
-  "#{CloudDns::API_BASE}/v1.0/12345#{path}"
+  "#{CloudDns::API_BASE[:us]}/v1.0/12345#{path}"
 end
 
 def auth_url
-  "#{CloudDns::API_AUTH}/v1.0"
+  "#{CloudDns::API_AUTH[:us]}/v1.0"
 end
 
 def stub_headers

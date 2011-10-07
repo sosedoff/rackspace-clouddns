@@ -59,7 +59,7 @@ module CloudDns
       
       path = "/v1.0/#{account_id}#{path}"
         
-      response = connection(CloudDns::API_BASE).send(method) do |request|
+      response = connection(api_base).send(method) do |request|
         request.headers.merge!(headers)
         
         case request.method
@@ -83,7 +83,7 @@ module CloudDns
         'X-Auth-Key'   => api_key  || '',
       }
       
-      response = connection(CloudDns::API_AUTH).send(:get) do |request|
+      response = connection(api_auth).send(:get) do |request|
         request.url("/v1.0")
         request.headers.merge!(headers)
       end
