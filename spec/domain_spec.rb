@@ -40,8 +40,17 @@ describe 'CloudDns::Domain' do
     
      domain = @client.new_domain('foobar.com', :email => 'foo@bar.com')
 
+     # Exact same
      domain.a('foobar.com', :data => '127.0.0.1').a?.should be_true
      lambda {domain.a('foobar.com', :data => '127.0.0.1')}.should raise_error
+     
+     # Same name but difrent data
+     domain.a('foobar2.com', :data => '127.0.0.1').a?.should be_true
+     lambda {domain.cname('foobar2.com', :data => 'foobar1.com')}.should raise_error
+     
+     # Same name but difrent data
+     domain.aaaa('foobar3.com', :data => '127.0.0.1').aaaa?.should be_true
+     lambda {domain.cname('foobar3.com', :data => 'foobar1.com')}.should raise_error
     
   end
 end
