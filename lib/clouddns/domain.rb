@@ -111,13 +111,13 @@ module CloudDns
       
       # check for dup
       @records.each do |record|
-        raise CloudDns::DublicateRecord.new(record.to_hash) if record.checksum == r.checksum
+        raise CloudDns::DublicateRecord.new(r.to_hash) if record.checksum == r.checksum
       end
       
       # check clashing names
       if r.type.match(/A|AAAA|CNAME/)
         @records.each do |record|
-          raise CloudDns::DublicateRecord.new(record.to_hash) if record.name == r.name && record.type.match(/A|AAAA|CNAME/)
+          raise CloudDns::DublicateRecord.new(r.to_hash) if record.name == r.name && record.type.match(/A|AAAA|CNAME/)
         end
       end
       
