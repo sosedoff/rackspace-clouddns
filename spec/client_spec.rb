@@ -41,7 +41,9 @@ describe CloudDns::Client do
     end
     
     it 'returns a list of domains' do
-      stub_get('/domains?showDetails=true', {:limit => '10', :offset => '0'}, 'domains.json')
+      stub_get('/domains', {:showDetails => 'true', :limit => '10', :offset => '0'}, 'domains.json')
+      stub_get('/domains/1/records', {:showDetails => 'true'}, 'records.json')
+      stub_get('/domains/2/records', {:showDetails => 'true'}, 'records.json')
       domains = @client.domains    
       domains.should be_an Array
       domains.size.should == 2

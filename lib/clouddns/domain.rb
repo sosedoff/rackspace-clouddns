@@ -55,9 +55,9 @@ module CloudDns
         h['recordsList'].records.map do |r|
           @records << CloudDns::Record.new(client, r.merge(:domain_id => self.id))
         end
-      else
+      elsif !new?
         # Lets get it!
-        @records = client.get_records(self)
+        @records = client.get_records(self) 
       end
       
       @original_checksum = checksum
@@ -107,8 +107,13 @@ module CloudDns
     # @return [CloudDns::Record]
     #
     def add_record(options={})
-      r = CloudDns::Record.new(@client, options)
-      options.merge!(:domain_id => self.id)
+      r = CloudDns::Record.new(@client, options.merge(:domain_id => self.id))
+      
+      # check for dup
+      @records.each do |record|
+        raise CloudDns::DublicateRecord.new(record.to_hash) if record.checksum == r.checksum
+      end
+      
       @records << r
       r
     end

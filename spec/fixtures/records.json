@@ -1,0 +1,6 @@
+{
+  "totalEntries" : 1, "records" : [ {
+  "name" : "ftp.example.com", "id" : "A-6817754", "type" : "A", "data" : "192.0.2.8", "ttl" : 5771,
+  "updated" : "2011-05-19T13:07:08.000+0000",
+  "created" : "2011-05-18T19:53:09.000+0000" }]
+}

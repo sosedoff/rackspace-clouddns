@@ -91,6 +91,13 @@ module CloudDns
       chunks.join(' ')
     end
     
+    # Calculate record checksum based on its string representation
+    #
+    def checksum
+      str = [@name, @ttl, @type, @data, @priority, @comment].join('')
+      Digest::SHA1.hexdigest(str)
+    end
+    
     private
     
     # Validate record
@@ -122,13 +129,6 @@ module CloudDns
       if ns?
         raise InvalidRecord, "Invalid domain: #{@data}" if !validate_domain(@data)
       end
-    end
-    
-    # Calculate record checksum based on its string representation
-    #
-    def checksum
-      str = [@name, @ttl, @type, @data, @priority, @comment].join('')
-      Digest::SHA1.hexdigest(str)
     end
   end
 end

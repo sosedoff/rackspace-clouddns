@@ -35,4 +35,13 @@ describe 'CloudDns::Domain' do
     domain.mx(:name => 'mail.foo.com', :data => 'mail.google.com', :priority => 10).mx?.should be_true
     
   end
+  
+  it 'raises an error on duplicate records' do
+    
+     domain = @client.new_domain('foobar.com', :email => 'foo@bar.com')
+
+     domain.a('foobar.com', :data => '127.0.0.1').a?.should be_true
+     lambda {domain.a('foobar.com', :data => '127.0.0.1')}.should raise_error
+    
+  end
 end
