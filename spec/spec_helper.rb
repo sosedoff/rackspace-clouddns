@@ -3,6 +3,11 @@ $:.unshift File.expand_path("../..", __FILE__)
 require 'clouddns'
 require 'webmock'
 require 'webmock/rspec'
+require 'simplecov'
+
+SimpleCov.start do
+  add_group 'CloudDns', 'lib/clouddns'
+end
 
 def fixture_path
   File.expand_path("../fixtures", __FILE__)
