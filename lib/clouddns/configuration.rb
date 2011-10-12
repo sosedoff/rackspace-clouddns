@@ -16,11 +16,15 @@ module CloudDns
     def log_requests
       @@logger
     end
-  
+    
+    # Set fetch mode for async requests
+    #
     def fetch_async_responses= (value)
       @@fetch_async_responses = value == true
     end
   
+    # Get current fetch mode for async requests
+    #
     def fetch_async_responses
       @@fetch_async_responses
     end

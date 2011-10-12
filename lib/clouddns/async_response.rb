@@ -30,6 +30,7 @@ module CloudDns
     end
     
     # Returns a hash representation of response
+    #
     def to_hash
       {:job_id => @job_id, :callback_url => @callback_url}    
     end

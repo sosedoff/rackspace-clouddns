@@ -7,8 +7,7 @@ module CloudDns
     # @return [CloudDns::Domain]
     #
     def new_domain(name, options={})
-      options.merge!(:name => name)
-      CloudDns::Domain.new(self, options)
+      CloudDns::Domain.new(self, options.merge(:name => name))
     end
     
     # Get a list of domain on account

@@ -1,4 +1,3 @@
-# require 'multi_json'
 require 'faraday_middleware'
 require 'faraday/response/raise_clouddns_error'
 
@@ -75,6 +74,7 @@ module CloudDns
     end
     
     # Performs an authentication request
+    #
     def authentication_request
       headers = {
         'Content-Type' => 'application/json',
