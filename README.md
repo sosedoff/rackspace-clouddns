@@ -22,7 +22,7 @@ Install via github:
 **Create a CloudDns client**
 
 ```ruby
-dns = CloudDns::Client.new(:username => 'API USERNAME', :api_key => 'API KEY')
+dns = CloudDns::Client.new(:username => 'API USERNAME', :api_key => 'API KEY', :location => :uk)
 
 # or via shortcut
 dns = CloudDns.new(:username => 'foo', :api_key => 'bar')

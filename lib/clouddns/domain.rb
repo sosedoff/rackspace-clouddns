@@ -55,6 +55,9 @@ module CloudDns
         h['recordsList'].records.map do |r|
           @records << CloudDns::Record.new(client, r.merge(:domain_id => self.id))
         end
+      elsif !new?
+        # Lets get it!
+        @records = client.get_records(self) 
       end
       
       @original_checksum = checksum
@@ -104,8 +107,20 @@ module CloudDns
     # @return [CloudDns::Record]
     #
     def add_record(options={})
-      r = CloudDns::Record.new(@client, options)
-      options.merge!(:domain_id => self.id)
+      r = CloudDns::Record.new(@client, options.merge(:domain_id => self.id))
+      
+      # check for dup
+      @records.each do |record|
+        raise CloudDns::DublicateRecord.new(r.to_hash) if record.checksum == r.checksum
+      end
+      
+      # check clashing names
+      if r.type.match(/A|AAAA|CNAME/)
+        @records.each do |record|
+          raise CloudDns::DublicateRecord.new(r.to_hash) if record.name == r.name && record.type.match(/A|AAAA|CNAME/)
+        end
+      end
+      
       @records << r
       r
     end
@@ -127,13 +142,13 @@ module CloudDns
     # Shorthands to add new specific records
     #
     
-    def a    (name, options={}) ; add_record(options.merge(:name => name, :type => 'A'))     ; end
-    def aaaa (name, options={}) ; add_record(options.merge(:name => name, :type => 'AAAA'))  ; end
-    def cname(name, options={}) ; add_record(options.merge(:name => name, :type => 'CNAME')) ; end
-    def ns   (name, options={}) ; add_record(options.merge(:name => name, :type => 'NS'))    ; end
-    def mx   (name, options={}) ; add_record(options.merge(:name => name, :type => 'MX'))    ; end
-    def txt  (name, options={}) ; add_record(options.merge(:name => name, :type => 'TXT'))   ; end
-    def srv  (name, options={}) ; add_record(options.merge(:name => name, :type => 'SRV'))   ; end
+    def a    (name, options={}) ; add_record(options.merge(name.is_a?(String) ? {:name => name} : name).merge(:type => 'A'))     ; end
+    def aaaa (name, options={}) ; add_record(options.merge(name.is_a?(String) ? {:name => name} : name).merge(:type => 'AAAA'))  ; end
+    def cname(name, options={}) ; add_record(options.merge(name.is_a?(String) ? {:name => name} : name).merge(:type => 'CNAME')) ; end
+    def ns   (name, options={}) ; add_record(options.merge(name.is_a?(String) ? {:name => name} : name).merge(:type => 'NS'))    ; end
+    def mx   (name, options={}) ; add_record(options.merge(name.is_a?(String) ? {:name => name} : name).merge(:type => 'MX'))    ; end
+    def txt  (name, options={}) ; add_record(options.merge(name.is_a?(String) ? {:name => name} : name).merge(:type => 'TXT'))   ; end
+    def srv  (name, options={}) ; add_record(options.merge(name.is_a?(String) ? {:name => name} : name).merge(:type => 'SRV'))   ; end
     
     #
     # Shorthands to get records by type
@@ -152,5 +167,6 @@ module CloudDns
     def checksum
       Digest::SHA1.hexdigest([@name, @email, @ttl].join)
     end
+    
   end
 end

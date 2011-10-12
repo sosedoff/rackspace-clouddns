@@ -15,7 +15,7 @@ describe 'CloudDns::AsyncResponse' do
   end
   
   it 'returns a response content' do
-    stub_get("/status/5fa38d01-1805-4f4f-a41a-56a3859f7ea0", {}, 'domain_export.json')
+    stub_get("/status/5fa38d01-1805-4f4f-a41a-56a3859f7ea0?showDetails=true", {}, 'domain_export.json')
     
     resp = CloudDns::AsyncResponse.new(@client, '5fa38d01-1805-4f4f-a41a-56a3859f7ea0')
     resp.content.should be_a Hash

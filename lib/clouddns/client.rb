@@ -10,8 +10,12 @@ module CloudDns
     attr_reader :auth_token
     attr_reader :account_id
     
+    attr_reader :api_auth
+    attr_reader :api_base
+    
     include CloudDns::Request
     include CloudDns::Connection
+    include CloudDns::ErrorHelper
     include CloudDns::Helpers
     include CloudDns::Domains
     include CloudDns::Records
@@ -23,10 +27,16 @@ module CloudDns
     #
     # options[:username] - RackspaceCloud API username
     # options[:api_key]  - RackspaceCloud API key
+    # options[:location] - RackspaceCloud account location, (default to :us)
     #
     def initialize(options={})
+      
+      options[:location] ||= :us
+      
       @username   = options[:username].to_s
       @api_key    = options[:api_key].to_s
+      @api_auth   = CloudDns::API_AUTH[options[:location]]
+      @api_base   = CloudDns::API_BASE[options[:location]]
       
       raise ArgumentError, "Client :username required!" if @username.empty?
       raise ArgumentError, "Client :api_key required!"  if @api_key.empty?
