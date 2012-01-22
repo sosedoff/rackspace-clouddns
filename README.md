@@ -126,9 +126,15 @@ record.ns?
 record.srv?
 ```
 
+## Contributions
+
+Feel free to contribute any patches or new features. Make sure to add a test coverage so it does not break any existing code.
+
+For documentation please visit (API Reference)[http://docs.rackspace.com/cdns/api/v1.0/cdns-devguide/content/index.html]
+
 ## License
 
-Copyright &copy; 2011 Dan Sosedoff.
+Copyright &copy; 2011-2012 Dan Sosedoff.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
