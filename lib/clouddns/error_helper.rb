@@ -1,7 +1,6 @@
 module CloudDns
   module ErrorHelper
-    
-    def raise_error code, message = ""
+    def raise_error(code, message='')
       case code
         when 400 then raise CloudDns::BadRequest.new(message)
         when 401 then raise CloudDns::Unauthorized.new(message)
@@ -18,7 +17,11 @@ module CloudDns
     end
     
     def on_complete(response)
-      raise_error(response[:status].to_i)
+      code = response[:status].to_i
+      if code >= 400
+        message = MultiJson.decode(response[:body])['message'] rescue ''
+        raise_error(code, message)
+      end
     end
   end
 end
