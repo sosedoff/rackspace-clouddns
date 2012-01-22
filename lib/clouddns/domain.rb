@@ -19,6 +19,7 @@ module CloudDns
     attr_accessor :ttl         # Domain TTL
     attr_accessor :email       # Domain email address
     attr_accessor :records     # Collection of CloudDns::Record objects
+    attr_accessor :comment     # Optional domain comment
     
     # Initialize a new CloudDns::Domain instance
     #
@@ -37,6 +38,7 @@ module CloudDns
       @account_id = h.account_id || h.accountId
       @name       = h.name.to_s.strip
       @email      = (h.emailAddress || h.email).to_s.strip
+      @comment    = h.comment
       @created_at = h.created.nil? ? nil : Time.parse(h.created)
       @updated_at = h.updated.nil? ? nil : Time.parse(h.updated)
       @ttl        = h.ttl || CloudDns::Record::DEFAULT_TTL
