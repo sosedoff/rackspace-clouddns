@@ -14,7 +14,6 @@ module CloudDns
   
   class InvalidNameserver  < Error; end
   class InvalidRecord      < Error; end
-  
   class DublicateRecord    < Error; end
 end
 
