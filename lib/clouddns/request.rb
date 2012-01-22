@@ -48,7 +48,7 @@ module CloudDns
     # @return [Hash]
     #
     def request(method, path, params={}, raw=false)
-      authenticate if auth_token.nil?
+      authenticate if auth_token.nil? || account_id.nil?
       
       headers = {
         'Accept'       => 'application/json',

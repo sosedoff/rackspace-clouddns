@@ -37,6 +37,8 @@ module CloudDns
       @api_key    = options[:api_key].to_s
       @api_auth   = CloudDns::API_AUTH[options[:location]]
       @api_base   = CloudDns::API_BASE[options[:location]]
+      @auth_token = options[:auth_token]
+      @account_id = options[:account_id]
       
       raise ArgumentError, "Client :username required!" if @username.empty?
       raise ArgumentError, "Client :api_key required!"  if @api_key.empty?
