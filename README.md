@@ -130,7 +130,7 @@ record.srv?
 
 Feel free to contribute any patches or new features. Make sure to add a test coverage so it does not break any existing code.
 
-For documentation please visit (API Reference)[http://docs.rackspace.com/cdns/api/v1.0/cdns-devguide/content/index.html]
+For documentation please visit [API Reference](http://docs.rackspace.com/cdns/api/v1.0/cdns-devguide/content/index.html)
 
 ## License
 
