@@ -1,0 +1,13 @@
+{
+  "status": "ERROR",
+  "error": {
+    "message": "The object already exists.",
+    "code": 409,
+    "details": "Domain already exists"
+  },
+  "verb": "POST",
+  "jobId": "e63886c9-acf0-4e5d-8023-09a0fae37446",
+  "callbackUrl": "https://dns.api.rackspacecloud.com/v1.0/1234/status/e63886c9-acf0-4e5d-8023-09a0fae37446",
+  "requestUrl": "https://dns.api.rackspacecloud.com/v1.0/1234/domains",
+  "request": "{\n        \"domains\" : [ {\n        \"name\" : \"example.com\",\n        \"emailAddress\" : \"admin@example.com\"\n        } ]\n        }\n    "
+}

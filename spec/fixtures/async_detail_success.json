@@ -1,0 +1,24 @@
+{
+  "status": "COMPLETED",
+  "verb": "POST",
+  "jobId": "3593a5e9-83af-4eb8-ae1a-25f07b747d80",
+  "callbackUrl": "https://dns.api.rackspacecloud.com/v1.0/1234/status/3593a5e9-83af-4eb8-ae1a-25f07b747d80",
+  "requestUrl": "https://dns.api.rackspacecloud.com/v1.0/1234/domains",
+  "request": "{\n        \"domains\" : [ {\n        \"name\" : \"example.com\",\n        \"emailAddress\" : \"admin@example.com\"\n        } ]\n        }\n    ",
+  "response": {
+    "domains": [{
+      "name": "example.com",
+      "id": 12345,
+      "nameservers": [{
+        "name": "ns.rackspace.com"
+      }, {
+        "name": "ns2.rackspace.com"
+      }],
+      "accountId": 1234,
+      "ttl": 3600,
+      "emailAddress": "admin@example.com",
+      "updated": "2011-08-23T19:02:54.000+0000",
+      "created": "2011-08-23T19:02:54.000+0000"
+    }]
+  }
+}

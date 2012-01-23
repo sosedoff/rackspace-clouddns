@@ -1,7 +1,13 @@
 module CloudDns
   class AsyncResponse
-    attr_reader :job_id
-    attr_reader :callback_url
+    attr_reader :job_id         # An identifier for the specific request.
+    attr_reader :callback_url   # Resource locator for querying the status of the request.
+    attr_reader :status         # An indicator of the request status: RUNNING, COMPLETED, or ERROR.
+    attr_reader :request_url    # The url of the original request.
+    attr_reader :verb           # The type of the original request: PUT, POST, or DELETE.
+    attr_reader :request        # The original request data, if any.
+    attr_reader :response       # The results of a COMPLETE operation, if any.
+    attr_reader :error          # The results of an ERROR operation.
     
     # Initialize a new CloudDns::AsyncResponse instance
     #
@@ -27,6 +33,12 @@ module CloudDns
       if @job_id.empty?
         raise ArgumentError, "Job ID required!"
       end
+      
+      @request_url = data['requestUrl']
+      @verb        = data['verb']
+      @status      = data['status']
+      @request     = data['request']
+      @error       = data['error']
     end
     
     # Returns a hash representation of response
@@ -39,6 +51,23 @@ module CloudDns
     #
     def content
       @client.status(self.job_id)
+    end
+    
+    # Returns true if job is running
+    #
+    def running?
+      self.status == 'RUNNING'
+    end
+  
+    # Returns true if job execution is completed
+    #
+    def completed?
+      self.status == 'COMPLETED'
+    end
+    
+    # Returns true if job execution failed
+    def error?
+      self.status == 'ERROR'
     end
   end
 end
